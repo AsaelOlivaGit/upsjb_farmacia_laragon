@@ -5,7 +5,7 @@
 
 @section('description', 'Listado de categorías')
 @section('item-breadcrumb', 'Inicio')
-@section('section-breadcrumble', 'Categorías')
+@section('section-breadcrumb', 'Categorías')
 @section('module-breadcrumb', 'Configuraciones')
 
 

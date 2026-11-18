@@ -33,7 +33,7 @@
               </li>
                <li class="breadcrumb-item text-muted fw-medium" aria-current="page">
                 <a href="" class="text-decoration-none text-secondary d-flex align-items-center gap-1">
-                  @section('item-breadcrumb')
+                  @yield('section-breadcrumb')
                 </a>
               </li>
               <li class="breadcrumb-item">

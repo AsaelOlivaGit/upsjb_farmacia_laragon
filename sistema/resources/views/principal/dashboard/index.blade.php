@@ -5,7 +5,7 @@
 
 @section('descripcion', 'Gráficos y KPIs')
 @section('item-breadcrumb', 'Inicio')
-@section('section-breadcrumble', 'Dashboard')
+@section('section-breadcrumb', 'Dashboard')
 @section('module-breadcrumb', 'Principal')
 
 
