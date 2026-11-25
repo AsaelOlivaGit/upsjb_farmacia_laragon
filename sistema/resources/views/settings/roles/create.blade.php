@@ -12,6 +12,7 @@
 
 @section('item-breadcrumb', 'Inicio')
 
+@section('route-breadcrumb', route('roles.index'))
 @section('section-breadcrumb', 'Roles')
 
 @section('module-breadcrumb', 'Configuraciones')

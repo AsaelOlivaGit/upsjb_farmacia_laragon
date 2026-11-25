@@ -5,25 +5,12 @@
 
 @section('description', 'Listado de roles')
 @section('item-breadcrumb', 'Inicio')
+@section('route-breadcrumb', route('roles.index'))
 @section('section-breadcrumb', 'Roles')
 @section('module-breadcrumb', 'Configuraciones')
 
 
 @section('content')
-   {{-- Mensajes flash: los envían store(), update() y destroy() --}}
-   @if (session('ok'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('ok') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-   @endif
-   @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-   @endif
-
    <div class="card bg-white border-0 shadow-sm border-5 border-top border-secondary">
                 <div class="card-header bg-white">
                     <div class="row">
@@ -35,6 +22,9 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    {{-- Mensajes flash: ok (verde) y error (rojo) --}}
+                    @include('partials.alerts')
+
                     <h6 class="text-uppercase small text-muted mb-3">Total de registros encontrados: {{ $roles->count() }}</h6>
                     <table id="display" class="table table-sm table-hover w-100 bg-white">
                         <thead>
@@ -46,37 +36,35 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @php
-                         $contador = 1;
-                        @endphp
-                        @foreach ($roles as $role)
+                        {{-- @forelse recorre la colección; si está vacía muestra el bloque @empty --}}
+                        @forelse ($roles as $role)
                             <tr>
-                                <td class="text-center align-middle">{{ $contador }}</td>
-                                <td class="text-start align-middle">{{ $role->name}}</td>
-                                <td class="text-start align-middle">{{ $role->description}}</td>
+                                <td class="text-center align-middle">{{ $loop->iteration }}</td>
+                                <td class="text-start align-middle">{{ $role->name }}</td>
+                                <td class="text-start align-middle">{{ $role->description ?? '—' }}</td>
                                 <td class="text-center align-middle">
                                     <div class="dropdown">
                                         <button class="btn btn-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bi bi-three-dots-vertical"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end">
-                                            <li><a class="dropdown-item" href="{{ route('roles.edit', $role->id)}}">Editar</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('roles.edit', $role) }}">Editar</a></li>
                                             <li>
-                                                <form action="{{ route('roles.destroy', $role->id) }}" method="POST" onsubmit="return confirm('Estas seguro de eliminar este registro?');" >
+                                                <form action="{{ route('roles.destroy', $role) }}" method="POST" onsubmit="return confirm('¿Seguro que desea eliminar este rol?');">
                                                     @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="dropdown-item">Eliminar</button>
+                                                    @method('DELETE') {{-- verbo real: destroy() --}}
+                                                    <button type="submit" class="dropdown-item text-danger">Eliminar</button>
                                                 </form>
-
                                             </li>
                                         </ul>
                                     </div>
                                 </td>
                             </tr>
-                            @php
-                             $contador++;
-                            @endphp
-                            @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted py-3">No hay roles registrados</td>
+                            </tr>
+                        @endforelse
                         </tbody>
                     </table>
                 </div>

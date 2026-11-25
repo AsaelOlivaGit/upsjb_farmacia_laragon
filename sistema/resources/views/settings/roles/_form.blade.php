@@ -1,6 +1,6 @@
 <div class="mb-3">
         <label for="name" class="form-label">Nombre del rol</label>
-        <input type="text" name="name" id="name"
+        <input type="text" name="name" id="name" maxlength="50"
             class="form-control @error('name') is-invalid @enderror"
             value="{{ old('name', $role->name ?? '')}}">
             @error('name')

@@ -32,7 +32,8 @@
                   <span>@yield('item-breadcrumb')</span>
               </li>
                <li class="breadcrumb-item text-muted fw-medium" aria-current="page">
-                <a href="" class="text-decoration-none text-secondary d-flex align-items-center gap-1">
+                {{-- route-breadcrumb: cada vista indica a qué listado lleva este enlace --}}
+                <a href="@yield('route-breadcrumb')" class="text-decoration-none text-secondary d-flex align-items-center gap-1">
                   @yield('section-breadcrumb')
                 </a>
               </li>
@@ -63,6 +64,9 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('js/app.js') }}"></script>
+
+{{-- Scripts propios de cada vista (@push('scripts')), por ejemplo el detalle de ventas --}}
+@stack('scripts')
 
 
 </body>

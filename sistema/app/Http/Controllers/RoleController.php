@@ -13,7 +13,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
+        // Los más recientes primero
+        $roles = Role::latest()->get();
         return view('settings.roles.index', compact('roles'));
     }
 

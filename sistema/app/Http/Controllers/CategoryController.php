@@ -13,7 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        // Las más recientes primero
+        $categories = Category::latest()->get();
         return view('settings.categories.index', compact('categories'));
     }
 
@@ -38,14 +39,6 @@ class CategoryController extends Controller
         Category::create($validated);
 
         return to_route('categories.index')->with('ok', 'Categoría registrada correctamente');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
-    {
-        return view('settings.categories.show', compact('category'));
     }
 
     /**
@@ -80,6 +73,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        // medicines.category_id tiene restrictOnDelete(): se avisa antes de que MySQL lance el error 1451
+        if ($category->medicines()->exists()) {
+            return to_route('categories.index')->with('error', 'No se puede eliminar: la categoría tiene medicamentos asociados');
+        }
+
         $category->delete();
 
         return to_route('categories.index')->with('ok', 'Categoría eliminada correctamente');

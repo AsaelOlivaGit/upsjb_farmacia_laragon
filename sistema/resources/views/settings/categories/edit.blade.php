@@ -7,6 +7,7 @@
 
 @section('description', 'Editar categoría')
 @section('item-breadcrumb', 'Inicio')
+@section('route-breadcrumb', route('categories.index'))
 @section('section-breadcrumb', 'Categorías')
 @section('module-breadcrumb', 'Configuraciones')
 
