@@ -72,6 +72,18 @@
 
   {{-- ── 4. Detalle --}}
   <div class="card bg-white border-0 shadow-sm border-5 border-top border-secondary p-3">
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+      <h2 class="h6 fw-bold mb-0">Detalle de ventas</h2>
+      {{-- Descargas con los mismos filtros de la pantalla: request()->query() copia los ?from=...&to=... de la URL --}}
+      <div class="d-flex gap-2">
+        <a href="{{ route('reports.sales.pdf', request()->query()) }}" class="btn btn-sm btn-outline-danger">
+          <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+        </a>
+        <a href="{{ route('reports.sales.excel', request()->query()) }}" class="btn btn-sm btn-outline-success">
+          <i class="bi bi-file-earmark-excel me-1"></i>Excel
+        </a>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table table-sm table-hover w-100 bg-white mb-0">
         <thead><tr class="text-uppercase small"><th>N.°</th><th>Fecha</th><th>Cliente</th><th>Vendedor</th><th class="text-end">IGV</th><th class="text-end">Total</th></tr></thead>

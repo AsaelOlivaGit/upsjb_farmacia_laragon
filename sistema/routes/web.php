@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:Administrador,Químico farmacéutico')->group(function () {
         Route::resource('medicines', MedicineController::class)->except('show');
         Route::get('/reports/sales', [ReportController::class, 'sales'])->name('reports.sales');
+        Route::get('/reports/sales/pdf', [ReportController::class, 'salesPdf'])->name('reports.sales.pdf');
+        Route::get('/reports/sales/excel', [ReportController::class, 'salesExcel'])->name('reports.sales.excel');
     });
 
     // Solo el administrador: Configuraciones
