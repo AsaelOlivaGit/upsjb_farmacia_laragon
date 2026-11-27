@@ -1,27 +1,43 @@
 <?php
+
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('template/administrador');
-// });
+// ── Solo para visitantes (sin sesión): el login
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
+});
 
-// Vista raíz del sistema: el dashboard
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+// ── Solo para usuarios con sesión iniciada
+Route::middleware('auth')->group(function () {
 
-// Gestión
-Route::resource('medicines', MedicineController::class)->except('show');
-Route::resource('customers', CustomerController::class)->except('show');
-// Una venta no se edita: se registra, se consulta (show) y, si hace falta, se anula (destroy)
-Route::resource('sales', SaleController::class)->except(['edit', 'update']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Configuraciones
-Route::resource('roles', RoleController::class)->except('show');
-Route::resource('users', UserController::class)->except('show');
-Route::resource('categories', CategoryController::class)->except('show');
+    // Todos los roles
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::resource('customers', CustomerController::class)->except('show');
+    Route::resource('sales', SaleController::class)->except(['edit', 'update'])
+        ->middlewareFor('destroy', 'role:Administrador');   // solo el administrador anula ventas
+
+    // Administrador y Químico farmacéutico
+    Route::middleware('role:Administrador,Químico farmacéutico')->group(function () {
+        Route::resource('medicines', MedicineController::class)->except('show');
+        Route::get('/reports/sales', [ReportController::class, 'sales'])->name('reports.sales');
+    });
+
+    // Solo el administrador: Configuraciones
+    Route::middleware('role:Administrador')->group(function () {
+        Route::resource('categories', CategoryController::class)->except('show');
+        Route::resource('roles', RoleController::class)->except('show');
+        Route::resource('users', UserController::class)->except('show');
+    });
+});
