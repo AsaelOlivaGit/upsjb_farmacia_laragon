@@ -22,20 +22,26 @@
             <i class="bi bi-house-door fs-6"></i><span class="small fw-medium">Dashboard</span>
           </a>
         </li>
+        {{-- Reportes: Administrador y Químico farmacéutico --}}
+        @if (auth()->user()->hasRole('Administrador', 'Químico farmacéutico'))
         <li class="nav-item">
-          <a href="" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2" aria-current="">
+          <a href="{{ route('reports.sales') }}" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['reports*']) ? 'active_item' : null }}" aria-current="{{ request()->is(['reports*']) ? 'page' : null }}">
             <i class="bi bi-bar-chart fs-6"></i><span class="small fw-medium">Reportes</span>
           </a>
         </li>
+        @endif
       </ul>
 
       <p class="sidebar-section-title text-white-50 text-uppercase fw-semibold px-3 mb-2 mt-3">Gestión</p>
       <ul class="nav flex-column gap-1 mb-1">
-            <li class="nav-item">
-            <a href="{{ route('medicines.index') }}" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['medicines*']) ? 'active_item' : null}}" aria-current="{{ request()->is(['medicines*']) ? 'page' : null}}">
+        {{-- Medicamentos: Administrador y Químico farmacéutico --}}
+        @if (auth()->user()->hasRole('Administrador', 'Químico farmacéutico'))
+        <li class="nav-item">
+          <a href="{{ route('medicines.index') }}" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['medicines*']) ? 'active_item' : null}}" aria-current="{{ request()->is(['medicines*']) ? 'page' : null}}">
             <i class="bi bi-box-seam fs-6"></i><span class="small fw-medium">Medicamentos</span>
           </a>
         </li>
+        @endif
         <li class="nav-item">
           <a href="{{ route('customers.index') }}" class="nav-link sidebar-link text-white-50 rounded-4 px-3 py-2 d-flex align-items-center gap-2 {{ request()->is(['customers*']) ? 'active_item' : null}}" aria-current="{{ request()->is(['customers*']) ? 'page' : null}}">
             <i class="bi bi-people fs-6"></i><span class="small fw-medium">Clientes</span>
@@ -48,6 +54,8 @@
         </li>
       </ul>
 
+      {{-- Configuraciones: solo Administrador --}}
+      @if (auth()->user()->hasRole('Administrador'))
       <p class="sidebar-section-title text-white-50 text-uppercase fw-semibold px-3 mb-2 mt-3">Configuraciones</p>
       <ul class="nav flex-column gap-1">
         <li class="nav-item">
@@ -66,6 +74,7 @@
           </a>
         </li>
       </ul>
+      @endif
 
     </nav>
 
