@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="San Juan – Sistema de Venta de Medicamentos">
   <title>FARM SJB | @yield('title')</title>
+  {{-- PWA (erag/laravel-pwa): manifest.json, color del tema e ícono --}}
+  @PwaHead
   <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 </head>
@@ -68,6 +70,8 @@
 {{-- Scripts propios de cada vista (@push('scripts')), por ejemplo el detalle de ventas --}}
 @stack('scripts')
 
+{{-- PWA: registra el service worker (public/sw.js) y muestra el botón para instalar la app --}}
+@RegisterServiceWorkerScript
 
 </body>
 </html>

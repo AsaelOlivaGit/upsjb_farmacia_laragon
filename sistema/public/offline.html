@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff0a41">
+    <title>FARM SJB | Sin conexión</title>
+    <!-- Esta página la guarda el service worker (sw.js) y se muestra cuando no hay internet.
+         Por eso no usa bootstrap.css: los estilos van aquí mismo. -->
+    <style>
+        body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+               background: #f4f6f8; font-family: "Segoe UI", Roboto, Arial, sans-serif; color: #323232; padding: 16px; box-sizing: border-box; }
+        .card { background: #fff; max-width: 420px; width: 100%; padding: 40px 32px; border-radius: 12px;
+                border-top: 5px solid #ff0a41; box-shadow: 0 2px 10px rgba(0, 0, 0, .08); text-align: center; }
+        .icon { width: 64px; height: 64px; margin: 0 auto 18px; border-radius: 50%; background: #ff0a41;
+                color: #fff; font-size: 40px; font-weight: bold; line-height: 64px; }
+        h1 { font-size: 1.3rem; margin: 0 0 8px; }
+        p { color: #6c757d; margin: 0 0 24px; line-height: 1.5; }
+        button { background: #ff0a41; color: #fff; border: 0; border-radius: 8px; padding: 10px 26px; font-size: 1rem; cursor: pointer; }
+        small { display: block; margin-top: 24px; color: #adb5bd; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="icon">+</div>
+        <h1>Sin conexión</h1>
+        <p>No se pudo conectar con el sistema. Revisa tu conexión a internet o a la red de la farmacia y vuelve a intentarlo.</p>
+        <button type="button" onclick="location.reload()">Reintentar</button>
+        <small>FARM SJB · Sistema de Venta de Medicamentos</small>
+    </div>
+</body>
+</html>

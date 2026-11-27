@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="San Juan – Sistema de Venta de Medicamentos">
   <title>FARM SJB | Iniciar sesión</title>
+  @PwaHead
   {{-- asset(): rutas desde public/, igual que en la plantilla --}}
   <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
@@ -150,5 +151,6 @@
     submit.querySelector('.btn-label').textContent = 'Ingresando...';
   });
 </script>
+@RegisterServiceWorkerScript
 </body>
 </html>
